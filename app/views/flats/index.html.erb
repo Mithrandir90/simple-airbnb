@@ -1,0 +1,38 @@
+<div class="container mt-3">
+  <div class="row">
+    <div class="col-12">
+      <h1>All our Flats.</h1>
+    </div>
+  </div>
+
+<div class="row">
+    <div class="col">
+      <% if @query %>
+        <p>You searched for <strong><%= @query %></strong>. We found <%= @flats.count %> flats out of our <%= Flat.count %> on our website.</p>
+      <% else %>
+        <p>All <%= Flat.count %> flats.</p>
+      <% end %>
+    </div>
+  </div>
+
+<% @flats.each do |f| %>
+  <div class="container d-inline m-4">
+    <div class="card my-4 d-inline-flex justify-content-center" style="width: 18rem; ">
+      <img class="card-img-top" src="https://cdn.mbl.is/frimg/9/92/992545.jpg" alt="Card image cap">
+        <div class="card-body">
+          <h5 class="card-title"><%= link_to f.name, flat_path(f) %></h5>
+          <p class="card-text"><%= f.address %></p>
+          <p class="card-text"><%= f.description %></p>
+        </div>
+        <div class="card-footer d-flex justify-content-around">
+          <i class="fas fa-euro-sign"><%= f.price_per_night %></i>
+          <i class="fas fa-user-friends"><%= f.number_of_guests %></i>
+        </div>
+        <div class="card-footer d-flex justify-content-around">
+          <%= link_to "ℹ️", flat_path(f), class: ""%>
+          <%= link_to '✏️', edit_flat_path(f), class: "" %>
+          <%= link_to '🗑', flat_path(f), method: :delete, data: { confirm: 'Do you really want to?' } %>
+        </div>
+    </div>
+  </div>
+<% end %>
